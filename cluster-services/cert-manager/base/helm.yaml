@@ -1,0 +1,35 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: jetstack
+spec:
+  url: https://charts.jetstack.io
+  interval: 10m
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cert-manager
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: cert-manager
+      version: 1.12.x
+      sourceRef:
+        kind: HelmRepository
+        name: jetstack
+  upgrade:
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+  install:
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+  valuesFrom:
+  - kind: ConfigMap
+    name: cert-manager-base-values
+  - kind: ConfigMap
+    name: cert-manager-overlay-values
+    optional: true

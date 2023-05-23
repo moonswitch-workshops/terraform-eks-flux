@@ -1,0 +1,8 @@
+aws:
+  region: eu-north-1 #replace as needed
+  zoneType: public
+
+serviceAccount:
+  name: external-dns
+  annotations:
+    eks.amazonaws.com/role-arn: replace-me-with-terraform-output

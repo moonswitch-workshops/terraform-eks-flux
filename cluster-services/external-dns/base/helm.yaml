@@ -1,0 +1,34 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: bitnami 
+spec:
+  url: https://charts.bitnami.com/bitnami
+  interval: 10m
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: external-dns
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: external-dns
+      version: 6.20.x
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+  upgrade:
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+  install:
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+  valuesFrom:
+  - kind: ConfigMap
+    name: external-dns-values
+  - kind: ConfigMap
+    name: external-dns-overlay-values
