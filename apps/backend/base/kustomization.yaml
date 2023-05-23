@@ -8,4 +8,4 @@ configMapGenerator:
     literals: 
       - uiColor="#96645E"
 commonLabels:
-  app: podinfo
+  app: backend

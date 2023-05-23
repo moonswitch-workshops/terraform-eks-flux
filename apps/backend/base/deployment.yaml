@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: podinfo
+  name: backend
 spec:
   selector:
     matchLabels:
-      app: podinfo
+      app: backend
   template:
     metadata:
       labels:
-        app: podinfo
+        app: backend
     spec:
       containers:
       - name: podinfod
